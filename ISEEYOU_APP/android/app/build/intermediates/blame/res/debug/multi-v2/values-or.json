@@ -1,0 +1,48 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\yrseo\\ISEEYOU\\ISEEYOU_APP\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-or\\values-or.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\yrseo\\.gradle\\caches\\transforms-1\\files-1.1\\firebase-messaging-17.1.0.aar\\b5cf401d313cac43b33b525aa96dce79\\res\\values-or\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "205",
+                        "endColumns": "102",
+                        "endOffsets": "307"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "106",
+                        "endOffsets": "157"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\yrseo\\ISEEYOU\\ISEEYOU_APP\\android\\app\\build\\intermediates\\res\\merged\\debug\\values-or\\values-or.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\yrseo\\.gradle\\caches\\transforms-1\\files-1.1\\firebase-messaging-17.1.0.aar\\b5cf401d313cac43b33b525aa96dce79\\res\\values-or\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "205",
+                        "endColumns": "102",
+                        "endOffsets": "307"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "106",
+                        "endOffsets": "157"
+                    }
+                }
+            ]
+        }
+    ]
+}

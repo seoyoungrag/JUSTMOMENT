@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "C:\\Users\\yrseo\\ISEEYOU\\ISEEYOU_APP\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action_tombstone.xml",
+        "source": "C:\\Users\\yrseo\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\5885b5f3e78f9ceb6e3971f9e111d82b\\res\\layout-v21\\notification_action_tombstone.xml"
+    },
+    {
+        "merged": "C:\\Users\\yrseo\\ISEEYOU\\ISEEYOU_APP\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_custom_big.xml",
+        "source": "C:\\Users\\yrseo\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\5885b5f3e78f9ceb6e3971f9e111d82b\\res\\layout-v21\\notification_template_custom_big.xml"
+    },
+    {
+        "merged": "C:\\Users\\yrseo\\ISEEYOU\\ISEEYOU_APP\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_icon_group.xml",
+        "source": "C:\\Users\\yrseo\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\5885b5f3e78f9ceb6e3971f9e111d82b\\res\\layout-v21\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "C:\\Users\\yrseo\\ISEEYOU\\ISEEYOU_APP\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action.xml",
+        "source": "C:\\Users\\yrseo\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\5885b5f3e78f9ceb6e3971f9e111d82b\\res\\layout-v21\\notification_action.xml"
+    }
+]

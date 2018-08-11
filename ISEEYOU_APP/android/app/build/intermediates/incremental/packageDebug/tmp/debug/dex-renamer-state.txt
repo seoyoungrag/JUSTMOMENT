@@ -1,0 +1,4 @@
+#Sat Aug 11 13:27:50 KST 2018
+base.0=C\:\\Users\\yrseo\\ISEEYOU\\ISEEYOU_APP\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+path.0=classes.dex
+renamed.0=classes.dex

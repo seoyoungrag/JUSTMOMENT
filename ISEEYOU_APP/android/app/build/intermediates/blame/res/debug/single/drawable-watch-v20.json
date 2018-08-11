@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "C:\\Users\\yrseo\\ISEEYOU\\ISEEYOU_APP\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-watch-v20\\common_google_signin_btn_text_dark_normal.xml",
+        "source": "C:\\Users\\yrseo\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-auth-15.0.1.aar\\e993be9e6d6aa19536375522e0281b74\\res\\drawable-watch-v20\\common_google_signin_btn_text_dark_normal.xml"
+    },
+    {
+        "merged": "C:\\Users\\yrseo\\ISEEYOU\\ISEEYOU_APP\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-watch-v20\\common_google_signin_btn_text_light_normal.xml",
+        "source": "C:\\Users\\yrseo\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-auth-15.0.1.aar\\e993be9e6d6aa19536375522e0281b74\\res\\drawable-watch-v20\\common_google_signin_btn_text_light_normal.xml"
+    },
+    {
+        "merged": "C:\\Users\\yrseo\\ISEEYOU\\ISEEYOU_APP\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-watch-v20\\common_google_signin_btn_text_disabled.xml",
+        "source": "C:\\Users\\yrseo\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-auth-15.0.1.aar\\e993be9e6d6aa19536375522e0281b74\\res\\drawable-watch-v20\\common_google_signin_btn_text_disabled.xml"
+    }
+]

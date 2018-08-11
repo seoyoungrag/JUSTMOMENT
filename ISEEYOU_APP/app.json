@@ -1,0 +1,8 @@
+{
+  "expo": {
+    "sdkVersion": "27.0.0"
+  },
+  "name": "App",
+  "displayName": "JustMoment",
+  "senderID": "YOUR-GCM-ID"
+}

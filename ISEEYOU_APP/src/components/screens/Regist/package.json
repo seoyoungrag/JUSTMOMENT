@@ -1,0 +1,5 @@
+{
+    "name": "@screens/Regist",
+    "main": "./UserRegist.js"
+  }
+  
