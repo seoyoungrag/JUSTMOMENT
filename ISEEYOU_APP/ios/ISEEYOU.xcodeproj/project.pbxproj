@@ -48,6 +48,8 @@
 		189289A3646A4906BB15F81B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C0CDB63BBE436E83C1EB74 /* AddressBook.framework */; };
 		86C1EBD0D9034857A89D2C4C /* libRNVersionCheck.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79C34646F7694163B29F89E6 /* libRNVersionCheck.a */; };
 		41989CFAC85149549E73F7BE /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42326C5969EB49798BC8F4F9 /* libRNSound.a */; };
+		FD7A73CDA2394D78BDCB69FD /* libRNAdMobManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C9776A562B1466EBAACC84C /* libRNAdMobManager.a */; };
+		CE58E74B547B4822A333106D /* libRCTSystemSetting.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBA4AC8087A41569B502684 /* libRCTSystemSetting.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -371,6 +373,10 @@
 		79C34646F7694163B29F89E6 /* libRNVersionCheck.a */ = {isa = PBXFileReference; name = "libRNVersionCheck.a"; path = "libRNVersionCheck.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		6276F2720B2D4B248B6F8A76 /* RNSound.xcodeproj */ = {isa = PBXFileReference; name = "RNSound.xcodeproj"; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		42326C5969EB49798BC8F4F9 /* libRNSound.a */ = {isa = PBXFileReference; name = "libRNSound.a"; path = "libRNSound.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		A2FF0FD2B0DD4331969A8990 /* RNAdMobManager.xcodeproj */ = {isa = PBXFileReference; name = "RNAdMobManager.xcodeproj"; path = "../node_modules/react-native-admob/ios/RNAdMobManager.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		1C9776A562B1466EBAACC84C /* libRNAdMobManager.a */ = {isa = PBXFileReference; name = "libRNAdMobManager.a"; path = "libRNAdMobManager.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		3F2C805728F04E3FA9428636 /* RCTSystemSetting.xcodeproj */ = {isa = PBXFileReference; name = "RCTSystemSetting.xcodeproj"; path = "../node_modules/react-native-system-setting/ios/RCTSystemSetting.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		3FBA4AC8087A41569B502684 /* libRCTSystemSetting.a */ = {isa = PBXFileReference; name = "libRCTSystemSetting.a"; path = "libRCTSystemSetting.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -410,6 +416,8 @@
 				189289A3646A4906BB15F81B /* AddressBook.framework in Frameworks */,
 				86C1EBD0D9034857A89D2C4C /* libRNVersionCheck.a in Frameworks */,
 				41989CFAC85149549E73F7BE /* libRNSound.a in Frameworks */,
+				FD7A73CDA2394D78BDCB69FD /* libRNAdMobManager.a in Frameworks */,
+				CE58E74B547B4822A333106D /* libRCTSystemSetting.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,6 +615,8 @@
 				86750BF2CEC54660B5728823 /* RNGoogleSignin.xcodeproj */,
 				E73A6B88E4C64464B6E832C6 /* RNVersionCheck.xcodeproj */,
 				6276F2720B2D4B248B6F8A76 /* RNSound.xcodeproj */,
+				A2FF0FD2B0DD4331969A8990 /* RNAdMobManager.xcodeproj */,
+				3F2C805728F04E3FA9428636 /* RCTSystemSetting.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1240,6 +1250,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1250,6 +1262,8 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin/**",
 					"$(SRCROOT)\..\node_modules\react-native-version-check\ios",
 					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
+					"$(SRCROOT)\..\node_modules\react-native-admob\ios",
+					"$(SRCROOT)\..\node_modules\react-native-system-setting\ios",
 				);
 			};
 			name = Debug;
@@ -1277,6 +1291,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1287,6 +1303,8 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin/**",
 					"$(SRCROOT)\..\node_modules\react-native-version-check\ios",
 					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
+					"$(SRCROOT)\..\node_modules\react-native-admob\ios",
+					"$(SRCROOT)\..\node_modules\react-native-system-setting\ios",
 				);
 			};
 			name = Release;
@@ -1315,6 +1333,8 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin/**",
 					"$(SRCROOT)\..\node_modules\react-native-version-check\ios",
 					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
+					"$(SRCROOT)\..\node_modules\react-native-admob\ios",
+					"$(SRCROOT)\..\node_modules\react-native-system-setting\ios",
 				);
 			};
 			name = Debug;
@@ -1342,6 +1362,8 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin/**",
 					"$(SRCROOT)\..\node_modules\react-native-version-check\ios",
 					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
+					"$(SRCROOT)\..\node_modules\react-native-admob\ios",
+					"$(SRCROOT)\..\node_modules\react-native-system-setting\ios",
 				);
 			};
 			name = Release;
@@ -1378,6 +1400,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1388,6 +1412,8 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin/**",
 					"$(SRCROOT)\..\node_modules\react-native-version-check\ios",
 					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
+					"$(SRCROOT)\..\node_modules\react-native-admob\ios",
+					"$(SRCROOT)\..\node_modules\react-native-system-setting\ios",
 				);
 			};
 			name = Debug;
@@ -1424,6 +1450,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1434,6 +1462,8 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin/**",
 					"$(SRCROOT)\..\node_modules\react-native-version-check\ios",
 					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
+					"$(SRCROOT)\..\node_modules\react-native-admob\ios",
+					"$(SRCROOT)\..\node_modules\react-native-system-setting\ios",
 				);
 			};
 			name = Release;
@@ -1469,6 +1499,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1479,6 +1511,8 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin/**",
 					"$(SRCROOT)\..\node_modules\react-native-version-check\ios",
 					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
+					"$(SRCROOT)\..\node_modules\react-native-admob\ios",
+					"$(SRCROOT)\..\node_modules\react-native-system-setting\ios",
 				);
 			};
 			name = Debug;
@@ -1514,6 +1548,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1524,6 +1560,8 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin/**",
 					"$(SRCROOT)\..\node_modules\react-native-version-check\ios",
 					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
+					"$(SRCROOT)\..\node_modules\react-native-admob\ios",
+					"$(SRCROOT)\..\node_modules\react-native-system-setting\ios",
 				);
 			};
 			name = Release;

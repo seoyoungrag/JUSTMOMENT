@@ -7,7 +7,10 @@ import {
   Easing,
   Dimensions,
   TouchableHighlight,
-  NativeModules
+  NativeModules,
+  TouchableOpacity,
+  StyleSheet,
+  BackHandler
 } from "react-native";
 import { createStackNavigator } from "react-navigation";
 import UserRegist from "@screens/Regist";
@@ -27,7 +30,15 @@ import reducers from "@redux-yrseo/reducers";
 
 import firebase from "react-native-firebase";
 import { Platform } from "react-native";
-import type { Notification } from "react-native-firebase";
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded
+} from "react-native-admob";
+
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+const Banner = ({ children, ...props }) => <View>{children}</View>;
 
 const uiTheme = {
   palette: {
@@ -91,108 +102,42 @@ const RootStack = createStackNavigator(
   }
 );
 export default class App extends React.Component {
-  componentDidMount() {
-    const channel = new firebase.notifications.Android.Channel(
-      "justmoment",
-      "방금",
-      firebase.notifications.Android.Importance.Max
-    ).setDescription("방금의 노티피케이션 채널");
-    firebase.notifications().android.createChannel(channel);
+  componentWillMount() {
+    AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
+    AdMobInterstitial.setAdUnitID("ca-app-pub-3705279151918090/7160757575");
+    //AdMobInterstitial.setAdUnitID("ca-app-pub-3940256099942544/5224354917");
 
-    this.messageListener = firebase
-      .messaging()
-      .onMessage((message: RemoteMessage) => {
-        console.log("foreground onMessage", message);
-        if (Platform.OS === "android") {
-          const localNotification = new firebase.notifications.Notification({
-            sound: "default",
-            show_in_foreground: true
-          })
-            .setNotificationId(message._messageId)
-            //.setTitle(message._data.title)
-            .setTitle("방금")
-            // .setSubtitle(message.subtitle)
-            .setBody(message._data.content)
-            // .setData(message.data)
-            .android.setChannelId("justmoment") // e.g. the id you chose above
-            .android.setSmallIcon("ic_stat_ic_stat_smallicon") // create this icon in Android Studio
-            // .android.setColor("#000000") // you can set a color here
-            .android.setPriority(firebase.notifications.Android.Priority.High);
+    AdMobInterstitial.addEventListener("adLoaded", () =>
+      console.log("AdMobInterstitial adLoaded")
+    );
+    AdMobInterstitial.addEventListener("adFailedToLoad", error =>
+      console.warn(error)
+    );
+    AdMobInterstitial.addEventListener("adOpened", () =>
+      console.log("AdMobInterstitial => adOpened")
+    );
+    AdMobInterstitial.addEventListener("adClosed", () => {
+      console.log("AdMobInterstitial => adClosed");
+    });
+    AdMobInterstitial.addEventListener("adLeftApplication", () => {
+      console.log("AdMobInterstitial => adLeftApplication");
+    });
 
-          firebase
-            .notifications()
-            .displayNotification(localNotification)
-            .catch(err => console.error(err));
-        } else if (Platform.OS === "ios") {
-          const localNotification = new firebase.notifications.Notification()
-            .setNotificationId(message._messageId)
-            .setTitle("방금")
-            //.setTitle(message._data.title)
-            .setSubtitle(message.subtitle)
-            .setBody(message._data.content)
-            .setData(message.data)
-            .ios.setBadge(message.ios.badge);
-
-          firebase
-            .notifications()
-            .displayNotification(localNotification)
-            .catch(err => console.error(err));
-        }
-      });
-
-    //notification으로 올때\
-    //onNotifiaction 이후 발생한다.
-    this.notificationDisplayedListener = firebase
-      .notifications()
-      .onNotificationDisplayed((notification: Notification) => {
-        // Process your notification as required
-        // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
-      });
-
-    //notification 올때
-    this.notificationListener = firebase
-      .notifications()
-      .onNotification((notification: Notification) => {
-        if (Platform.OS === "android") {
-          const localNotification = new firebase.notifications.Notification({
-            sound: "default",
-            show_in_foreground: true
-          })
-            .setNotificationId(notification.notificationId)
-            .setTitle("방금")
-            .setSubtitle(notification.subtitle)
-            .setBody(notification.body)
-            .setData(notification.data)
-            .android.setChannelId("justmoment") // e.g. the id you chose above
-            .android.setSmallIcon("ic_stat_ic_stat_smallicon") // create this icon in Android Studio
-            // .android.setColor("#000000") // you can set a color here
-            .android.setPriority(firebase.notifications.Android.Priority.High);
-
-          firebase
-            .notifications()
-            .displayNotification(localNotification)
-            .catch(err => console.error(err));
-        } else if (Platform.OS === "ios") {
-          const localNotification = new firebase.notifications.Notification()
-            .setNotificationId(notification.notificationId)
-            .setTitle("방금")
-            .setSubtitle(notification.subtitle)
-            .setBody(notification.body)
-            .setData(notification.data)
-            .ios.setBadge(message.ios.badge);
-
-          firebase
-            .notifications()
-            .displayNotification(localNotification)
-            .catch(err => console.error(err));
-        }
-      });
+    AdMobInterstitial.requestAd().catch(error => console.warn(error));
   }
+  componentDidMount() {}
 
   componentWillUnmount() {
-    this.notificationDisplayedListener();
-    this.notificationListener();
-    // this.messageListener();
+    AdMobInterstitial.removeAllListeners();
+  }
+  showInterstitial() {
+    setTimeout(() => {
+      AdMobInterstitial.removeAllListeners();
+      BackHandler.exitApp();
+    }, 1000);
+    // BackHandler.exitApp();
+    AdMobInterstitial.showAd().catch(error => console.warn(error));
+    // AdMobInterstitial.removeAllListeners();
   }
 
   render() {
@@ -200,8 +145,67 @@ export default class App extends React.Component {
       <Provider store={createStore(reducers)}>
         <ThemeContext.Provider value={getTheme(uiTheme)}>
           <RootStack />
+
+          <Banner>
+            <TouchableOpacity
+              onPress={this.showInterstitial}
+              style={styles.headerFirstIconContainer}
+            >
+              <MaterialIcons
+                name="exit-to-app"
+                color="#000000"
+                size={35}
+                borderWidth={0}
+                style={{ marginRight: 10 }}
+              />
+              <View style={styles.headerSecondTextContainer}>
+                <Text style={styles.headerSecondText}>광고보고 종료하기</Text>
+              </View>
+            </TouchableOpacity>
+            {/* <Button title="광고보고 종료하기" onPress={this.showInterstitial} /> */}
+          </Banner>
         </ThemeContext.Provider>
       </Provider>
     );
   }
 }
+
+let styles = {
+  headerMenuIconContainer: {
+    alignItems: "flex-end",
+    paddingRight: 10
+  },
+  headerMenuIcon: {
+    width: 15,
+    resizeMode: "contain"
+  },
+  headerFirstIconContainer: {
+    paddingLeft: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    height: 70,
+    borderColor: "black",
+    borderWidth: 1
+  },
+  headerSecondTextContainer: {
+    paddingLeft: 10
+  },
+  headerThirdDelimeterContainer: {
+    paddingLeft: 10,
+    alignItems: "flex-start"
+  },
+  headerFirstIcon: {
+    width: 15,
+    resizeMode: "contain"
+  },
+  headerSecondText: {
+    fontSize: 22,
+    color: "black",
+    fontFamily: "NotoSans-Regular"
+  },
+  headerThirdDelimeter: {
+    width: 1,
+    resizeMode: "contain"
+  }
+};

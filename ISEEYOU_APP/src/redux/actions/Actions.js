@@ -70,3 +70,10 @@ export function setTodayExerciseList(data) {
     payload: data
   };
 }
+
+export function setChildStatus(data) {
+  return {
+    type: exerciseTypes.SET_CHILD_STATUS,
+    payload: data
+  };
+}

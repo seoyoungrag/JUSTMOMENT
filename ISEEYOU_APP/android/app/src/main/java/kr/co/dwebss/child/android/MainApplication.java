@@ -3,6 +3,8 @@ package kr.co.dwebss.child.android;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.ninty.system.setting.SystemSettingPackage;
+import com.sbugert.rnadmob.RNAdMobPackage;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import io.xogus.reactnative.versioncheck.RNVersionCheckPackage;
@@ -43,6 +45,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SystemSettingPackage(),
+            new RNAdMobPackage(),
             new RNSoundPackage(),
             new ReactNativePushNotificationPackage(),
             new RNVersionCheckPackage(),

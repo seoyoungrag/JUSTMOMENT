@@ -4558,6 +4558,12 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
+react-native-admob@^2.0.0-beta.5:
+  version "2.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/react-native-admob/-/react-native-admob-2.0.0-beta.5.tgz#f83fd6144c5dd3e708e937793f41c0c50db86682"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-animatable@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.3.0.tgz#b5c3940fc758cfd9b2fe54613a457c4b6962b46e"
@@ -4686,6 +4692,10 @@ react-native-super-grid@^2.4.1:
   resolved "https://registry.yarnpkg.com/react-native-super-grid/-/react-native-super-grid-2.4.1.tgz#596cadddd98c8826e7803cb296ae829de170c17e"
   dependencies:
     prop-types "^15.6.0"
+
+react-native-system-setting@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/react-native-system-setting/-/react-native-system-setting-1.5.2.tgz#a61b88ede6a700da609fe56beb71c184c3d09d59"
 
 react-native-tab-view@^0.0.77:
   version "0.0.77"

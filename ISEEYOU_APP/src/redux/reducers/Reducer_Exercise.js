@@ -7,6 +7,7 @@ const exerciseDay = [];
 //운동범위데이터 DB랑 동일한 값 유지한다.
 const exerciseRange = [];
 const exerciseInfo = [];
+let childStatus = "아이의 상태를 기다립니다.";
 const wiseSaying = [
   {
     idx: 1,
@@ -50,7 +51,8 @@ export default (
     exerciseDay,
     exerciseRange,
     wiseSaying,
-    exerciseInfo
+    exerciseInfo,
+    childStatus
   },
   action
 ) => {
@@ -59,6 +61,11 @@ export default (
       return {
         ...state,
         exerciseRange: action.payload
+      };
+    case types.SET_CHILD_STATUS:
+      return {
+        ...state,
+        childStatus: action.payload
       };
     default:
       return state;

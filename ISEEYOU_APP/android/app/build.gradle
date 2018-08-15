@@ -101,12 +101,18 @@ android {
         applicationId "kr.co.dwebss.child.android"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 6
-        versionName "1.5"
+        versionCode 8
+        versionName "1.7"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        multiDexEnabled true
     }
+    dexOptions {
+      jumboMode true
+      javaMaxHeapSize "4g"
+    } 
+
     signingConfigs {
         debug{
                 storeFile file(MYAPP_DEBUG_STORE_FILE)
@@ -152,6 +158,9 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-system-setting')
+    compile 'com.android.support:multidex:1.0.0'
+    compile project(':react-native-admob')
     compile project(':react-native-sound')
     compile project(':react-native-push-notification')
     implementation project(':react-native-version-check')

@@ -213,6 +213,7 @@ class Loading extends React.Component {
             console.log("pushToken: " + token);
             console.log("push perm check end");
             userInfo.pushToken = token;
+            pushToken = token;
           })
           .then(this.getCode)
           .then(
@@ -226,6 +227,9 @@ class Loading extends React.Component {
                     JSON.parse(JSON.stringify(userInfo)),
                     res
                   );
+                  userInfo.pushToken = pushToken;
+                  console.log("for update token");
+                  console.log(userInfo);
                   PROPS.setUserInfo(userInfo);
                   if (res.userNm == null || res.userPhone == null) {
                     // console.log(

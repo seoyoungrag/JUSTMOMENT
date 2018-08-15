@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import {
+  Alert,
   AppRegistry,
   View,
   Text,
@@ -39,15 +40,22 @@ import PTRView from "react-native-pull-to-refresh";
 
 import firebase from "react-native-firebase";
 
+import type { Notification } from "react-native-firebase";
+import { Platform } from "react-native";
 function mapStateToProps(state) {
   return {
     USER_INFO: state.REDUCER_USER.user,
-    WISE_SAYING: state.REDUCER_EXERCISE.wiseSaying
+    WISE_SAYING: state.REDUCER_EXERCISE.wiseSaying,
+    CHILD_STATUS: state.REDUCER_EXERCISE.childStatus
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    setChildStatus: data => {
+      dispatch(ActionCreator.setChildStatus(data));
+    }
+  };
 }
 class Main extends Component {
   constructor(props) {
@@ -74,14 +82,143 @@ class Main extends Component {
   }
 
   componentWillUnmount() {
+    this.notificationDisplayedListener();
+    this.notificationListener();
+    // this.messageListener();
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackButton);
   }
 
   handleBackButton() {
+    Alert.alert(
+      "앱을 종료합니다.",
+      "종료하시겠습니까?",
+      [
+        {
+          text: "아니오",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "네",
+          onPress: () => BackHandler.exitApp()
+        }
+      ],
+      {
+        cancelable: false
+      }
+    );
     return true;
   }
 
   componentDidMount() {
+    const channel = new firebase.notifications.Android.Channel(
+      "justmoment",
+      "방금",
+      firebase.notifications.Android.Importance.Max
+    ).setDescription("방금의 노티피케이션 채널");
+    firebase.notifications().android.createChannel(channel);
+
+    this.messageListener = firebase
+      .messaging()
+      .onMessage((message: RemoteMessage) => {
+        console.log("foreground onMessage", message);
+        if (Platform.OS === "android") {
+          const localNotification = new firebase.notifications.Notification({
+            sound: "default",
+            show_in_foreground: true
+          })
+            .setNotificationId(message._messageId)
+            //.setTitle(message._data.title)
+            .setTitle("방금")
+            // .setSubtitle(message.subtitle)
+            .setBody(message._data.content)
+            // .setData(message.data)
+            .android.setChannelId("justmoment") // e.g. the id you chose above
+            .android.setSmallIcon("ic_stat_ic_stat_smallicon") // create this icon in Android Studio
+            // .android.setColor("#000000") // you can set a color here
+            .android.setPriority(firebase.notifications.Android.Priority.High);
+          console.log("메시지수신1시작");
+          console.log(this.props.setChildStatus);
+          console.log(this.props.CHILD_STATUS);
+          console.log(message._data.content);
+
+          this.props.setChildStatus(message._data.content);
+          console.log("1" + this.props.CHILD_STATUS);
+          console.log("메시지수신1끝");
+          firebase
+            .notifications()
+            .displayNotification(localNotification)
+            .catch(err => console.error(err));
+        } else if (Platform.OS === "ios") {
+          const localNotification = new firebase.notifications.Notification()
+            .setNotificationId(message._messageId)
+            .setTitle("방금")
+            //.setTitle(message._data.title)
+            .setSubtitle(message.subtitle)
+            .setBody(message._data.content)
+            .setData(message.data)
+            .ios.setBadge(message.ios.badge);
+
+          firebase
+            .notifications()
+            .displayNotification(localNotification)
+            .catch(err => console.error(err));
+        }
+      });
+
+    //notification으로 올때\
+    //onNotifiaction 이후 발생한다.
+    this.notificationDisplayedListener = firebase
+      .notifications()
+      .onNotificationDisplayed((notification: Notification) => {
+        // Process your notification as required
+        // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
+      });
+
+    //notification 올때
+    this.notificationListener = firebase
+      .notifications()
+      .onNotification((notification: Notification) => {
+        if (Platform.OS === "android") {
+          const localNotification = new firebase.notifications.Notification({
+            sound: "default",
+            show_in_foreground: true
+          })
+            .setNotificationId(notification.notificationId)
+            .setTitle("방금")
+            .setSubtitle(notification.subtitle)
+            .setBody(notification.body)
+            .setData(notification.data)
+            .android.setChannelId("justmoment") // e.g. the id you chose above
+            .android.setSmallIcon("ic_stat_ic_stat_smallicon") // create this icon in Android Studio
+            // .android.setColor("#000000") // you can set a color here
+            .android.setPriority(firebase.notifications.Android.Priority.High);
+
+          console.log("메시지수신2시작");
+          console.log(this.props.setChildStatus);
+          console.log(notification.data);
+          this.props.setChildStatus(notification.data);
+          console.log(this.props.CHILD_STATUS);
+          console.log("메시지수신1끝");
+          firebase
+            .notifications()
+            .displayNotification(localNotification)
+            .catch(err => console.error(err));
+        } else if (Platform.OS === "ios") {
+          const localNotification = new firebase.notifications.Notification()
+            .setNotificationId(notification.notificationId)
+            .setTitle("방금")
+            .setSubtitle(notification.subtitle)
+            .setBody(notification.body)
+            .setData(notification.data)
+            .ios.setBadge(message.ios.badge);
+
+          firebase
+            .notifications()
+            .displayNotification(localNotification)
+            .catch(err => console.error(err));
+        }
+      });
     this._getChildInfo();
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
   }
@@ -284,7 +421,7 @@ class Main extends Component {
             // height: "100%",
             justifyContent: "center"
           }}
-          resizeMode="contain"
+          resizeMode="stretch"
           source={Images.graphicImage}
         >
           <View

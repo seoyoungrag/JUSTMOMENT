@@ -52,7 +52,8 @@ let styles = {
 function mapStateToProps(state) {
   return {
     USER_INFO: state.REDUCER_USER.user,
-    EXERCISE_GOAL: state.REDUCER_EXERCISE.exerciseGoalCd
+    EXERCISE_GOAL: state.REDUCER_EXERCISE.exerciseGoalCd,
+    CHILD_STATUS: state.REDUCER_EXERCISE.childStatus
   };
 }
 
@@ -60,6 +61,9 @@ function mapDispatchToProps(dispatch) {
   return {
     setUserInfo: user => {
       dispatch(ActionCreator.setUserInfo(user));
+    },
+    setChildStatus: data => {
+      dispatch(ActionCreator.setChildStatus(data));
     }
   };
 }
@@ -69,6 +73,11 @@ class Header extends React.Component {
   }
 
   render() {
+    console.log("Header");
+    console.log(this.props.CHILD_STATUS);
+    // this.setState({
+    //   CHILD_STATUS: this.state.CHILD_STATUS
+    // });
     const USER_INFO = this.props.USER_INFO;
     const EXERCISE_GOAL = this.props.EXERCISE_GOAL;
     const isBackForTab = this.props.isBack;
@@ -127,7 +136,8 @@ class Header extends React.Component {
             </View>
             <View style={styles.headerSecondTextContainer}>
               <Text style={styles.headerSecondText}>
-                우리아이가 방금 등원했어요.
+                {/* 우리아이가 방금 등원했어요. */}
+                {this.props.CHILD_STATUS}
               </Text>
             </View>
 
