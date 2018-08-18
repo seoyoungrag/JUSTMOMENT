@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   Linking,
   Dimensions,
-  View
+  View,
+  ActivityIndicator
 } from "react-native";
 
 import QRCodeScanner from "@lib/qrcodeScanner";
@@ -114,13 +115,15 @@ class QRcodeScanner extends Component {
     super(props);
     this.state = {
       items: [],
-      senderId: "538231083703"
+      senderId: "538231083703",
+      loadingShow: false
     };
     // this.notif = new LocalNotifService(
     //   this.onRegister.bind(this),
     //   this.onNotif.bind(this)
     // );
     // this.notiWithRemove = this.notiWithRemove.bind(this);
+    this._saveAllChild = this._saveAllChild.bind(this);
   }
 
   onRegister(token) {
@@ -149,7 +152,63 @@ class QRcodeScanner extends Component {
       }, 2000);
     });
   }
-
+  _saveAllChild() {
+    //return new Promise(resolve => {
+    // this.setState({
+    //   loadingShow: true
+    // });
+    let eventNm = this.props.CODE.find(elem => {
+      return elem.code == this.props.navigation.state.params.targetEventCd;
+    }).codeNm;
+    let destinyNm = this.props.navigation.state.params.destinyNm;
+    let classDailyEventId = this.props.navigation.state.params
+      .classDailyEventId;
+    let targetEventCd = this.props.navigation.state.params.targetEventCd;
+    var date = new Date();
+    //인서트시간이나 서버시간찍어도 됨..
+    const items = [...this.state.items];
+    let processingId = 0;
+    for (let i = 0; i < items.length; i++) {
+      let data = {
+        classDailyEventId: classDailyEventId,
+        childId: items[i].id,
+        checkerUserId: this.props.USER_INFO.userId
+      };
+      let formDate = getTime();
+      if (targetEventCd == 300001) {
+        data.eventStartDt = formDate;
+      } else {
+        data.eventEndDt = formDate;
+      }
+      let body = JSON.stringify(data);
+      const COM = this;
+      cFetch(APIS.POST_CHILD_EVENT, [], body, {
+        responseProc: function(res) {
+          processingId++;
+        },
+        responseNotFound: function(res) {
+          processingId++;
+          console.log("qrcode not f ", res);
+          alert("입력이실패했습니다.\n관리자에게 확인해주세요");
+        },
+        responseError: function(res) {
+          processingId++;
+          console.log("qrcode err ", res);
+        }
+      });
+    }
+    // setTimeout(() => {
+    //   processingId = items.length;
+    // }, 5000);
+    // while (processingId != items.length) {}
+    // this.setState({
+    //   loadingShow: false
+    // });
+    this.props.navigation.state.params.refreshFnc();
+    this.props.navigation.navigate("Main");
+    //resolve();
+    //});
+  }
   componentDidMount() {
     // this.notiWithRemove("어린이1", "어린이2")
     //   .then(() => {
@@ -171,6 +230,26 @@ class QRcodeScanner extends Component {
     // });
     // this.setState({ items: checkedList });
   }
+  //동작안하네..
+  _closeScreen = () => {
+    this._saveAllChild().then(() => {
+      this.props.navigation.state.params.refreshFnc();
+      this.props.navigation.navigate("Main");
+    });
+  };
+  _removeChild = id => {
+    return new Promise(resolve => {
+      const items = [...this.state.items];
+      var index = items
+        .map(x => {
+          return x.id;
+        })
+        .indexOf(id);
+      items.splice(index, 1);
+      this.setState({ items: items });
+      resolve();
+    });
+  };
   _addChild = (id, nm) => {
     return new Promise(resolve => {
       const items = [...this.state.items];
@@ -200,14 +279,7 @@ class QRcodeScanner extends Component {
       return elem.code == 900001;
     });
     url = code ? code.codeNm : url;
-    let classDailyEventId = this.props.navigation.state.params
-      .classDailyEventId;
-    let destinyNm = this.props.navigation.state.params.destinyNm;
     let targetChildList = this.props.navigation.state.params.targetChildList;
-    let targetEventCd = this.props.navigation.state.params.targetEventCd;
-    let eventNm = this.props.CODE.find(elem => {
-      return elem.code == this.props.navigation.state.params.targetEventCd;
-    }).codeNm;
     let childId = "";
     let childNm = "";
     let classNm = "";
@@ -234,65 +306,17 @@ class QRcodeScanner extends Component {
       if (isNew) {
         this._addChild(childId, childNm)
           .then(() => {
-            var date = new Date();
-            //인서트시간이나 서버시간찍어도 됨..
-            let data = {
-              classDailyEventId: classDailyEventId,
-              childId: childId,
-              checkerUserId: this.props.USER_INFO.userId
-            };
-            let formDate = getTime();
-            if (targetEventCd == 300001) {
-              data.eventStartDt = formDate;
-            } else {
-              data.eventEndDt = formDate;
-            }
-            let body = JSON.stringify(data);
-            const COM = this;
-            cFetch(APIS.POST_CHILD_EVENT, [], body, {
-              responseProc: function(res) {
-                // let title = "";
-                // let message =
-                //   classNm +
-                //   " " +
-                //   childNm +
-                //   " 어린이가 " +
-                //   destinyNm +
-                //   "에 " +
-                //   eventNm +
-                //   "하였습니다.";
-                // COM.notiWithRemove("어린이1", "어린이2")
-                //   .then(() => {
-                //     COM.notif.cancelAll();
-                //   })
-                //   .catch(err => {
-                //     console.log(err);
-                //   });
-
-                whoosh.play(success => {
-                  if (success) {
-                    console.log("successfully finished playing");
-                  } else {
-                    console.log("playback failed due to audio decoding errors");
-                    // reset the player to its uninitialized state (android only)
-                    // this is the only option to recover after an error occured and use the player again
-                    whoosh.reset();
-                  }
-                });
-
-                Vibration.vibrate();
-                console.log("volume: " + whoosh.getVolume());
-                console.log("pan: " + whoosh.getPan());
-                console.log("loops: " + whoosh.getNumberOfLoops());
-              },
-              responseNotFound: function(res) {
-                console.log("qrcode not f ", res);
-                alert("입력이실패했습니다.\n관리자에게 확인해주세요");
-              },
-              responseError: function(res) {
-                console.log("qrcode err ", res);
+            whoosh.play(success => {
+              if (success) {
+                console.log("successfully finished playing");
+              } else {
+                console.log("playback failed due to audio decoding errors");
+                // reset the player to its uninitialized state (android only)
+                // this is the only option to recover after an error occured and use the player again
+                whoosh.reset();
               }
             });
+            Vibration.vibrate();
           })
           .catch(error => {
             console.log(error);
@@ -311,81 +335,117 @@ class QRcodeScanner extends Component {
   render() {
     const { width, height } = Dimensions.get("window");
     const content = (
-      <QRCodeScanner
-        vibrate={false}
-        reactivate={true}
-        reactivateTimeout={2}
-        containerStyle={{ height: (height * 90) / 100, flex: 1 }}
-        topContent={
-          <Text style={(styles.centerText, { backgroundColor: "white" })}>
-            아이의{" "}
-            <Text style={(styles.textBold, { backgroundColor: "white" })}>
-              QR CODE
-            </Text>
-            를 인식해주세요.
-          </Text>
-        }
-        topViewStyle={{
-          // flex: undefined,
-          // height: (height * 5) / 100,
-          backgroundColor: "white",
+      <View
+        style={{
+          flex: 1,
           justifyContent: "center",
-          alignItems: "center",
-          padding: 0,
-          margin: 0
+          alignItems: "center"
         }}
-        // containerStyle={{ height: 400 }}
-        cameraStyle={{
-          height: (height * 50) / 100,
-          alignItems: undefined,
-          justifyContent: undefined,
-          flex: undefined
-        }}
-        onRead={this.onSuccess.bind(this)}
-        bottomViewStyle={{
-          width: width,
-          height: (height * 30) / 100,
-          flex: undefined
-        }}
-        bottomContent={
-          <TouchableOpacity style={styles.buttonTouchable}>
-            <GridView
-              itemDimension={50}
-              items={this.state.items}
-              style={styles.gridView}
-              renderItem={item => (
-                <View
-                  style={[
-                    styles.itemContainer,
+      >
+        {this.state.loadingShow ? (
+          <View
+            style={{
+              padding: 10,
+              margin: 10,
+              backgroundColor: "white",
+              borderColor: "silver",
+              borderWidth: 1
+            }}
+          >
+            <Text style={{ color: "black" }}>아이들 정보를 입력중입니다.</Text>
+            <ActivityIndicator color="black" size="large" />
+          </View>
+        ) : (
+          <QRCodeScanner
+            vibrate={false}
+            reactivate={true}
+            reactivateTimeout={2}
+            containerStyle={{ height: (height * 80) / 100, flex: 1 }}
+            topContent={
+              <Text style={(styles.centerText, { backgroundColor: "white" })}>
+                아이의{" "}
+                <Text style={(styles.textBold, { backgroundColor: "white" })}>
+                  QR CODE
+                </Text>
+                를 인식해주세요.
+              </Text>
+            }
+            topViewStyle={{
+              // flex: undefined,
+              // height: (height * 5) / 100,
+              backgroundColor: "white",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: 0,
+              margin: 0
+            }}
+            // containerStyle={{ height: 400 }}
+            cameraStyle={{
+              height: (height * 40) / 100,
+              alignItems: undefined,
+              justifyContent: undefined,
+              flex: undefined
+            }}
+            onRead={this.onSuccess.bind(this)}
+            bottomViewStyle={{
+              width: width,
+              height: (height * 30) / 100,
+              flex: undefined
+            }}
+            bottomContent={
+              <TouchableOpacity style={styles.buttonTouchable}>
+                <GridView
+                  itemDimension={50}
+                  items={this.state.items}
+                  style={styles.gridView}
+                  renderItem={item => (
+                    <TouchableOpacity
+                      style={[
+                        styles.itemContainer,
+                        {
+                          backgroundColor: item.code,
+                          borderColor: item.code,
+                          borderWidth: 1
+                        }
+                      ]}
+                      onPress={this._removeChild}
+                    >
+                      <View
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          right: 0,
+                          padding: 3,
+                          borderColor: "silver",
+                          borderWidth: 1,
+                          backgroundColor: "white"
+                        }}
+                      >
+                        <Text style={styles.itemX}>X</Text>
+                      </View>
+                      <Text style={styles.itemName}>{item.name}</Text>
+                    </TouchableOpacity>
+                  )}
+                />
+                <TouchableOpacity
+                  style={
+                    (styles.buttonTouchable,
                     {
-                      backgroundColor: item.code,
-                      borderColor: item.code,
-                      borderWidth: 1
-                    }
-                  ]}
+                      paddingTop: 0,
+                      paddingBottom: 20
+                    })
+                  }
+                  onPress={() => {
+                    this._saveAllChild();
+                  }}
                 >
-                  <Text style={styles.itemName}>{item.name}</Text>
-                </View>
-              )}
-            />
-            <TouchableOpacity
-              style={
-                (styles.buttonTouchable,
-                {
-                  paddingTop: 0,
-                  paddingBottom: 20
-                })
-              }
-              onPress={() => {
-                this.props.navigation.state.params.refreshFnc();
-                this.props.navigation.navigate("Main");
-              }}
-            >
-              <Text style={styles.buttonText}>닫기</Text>
-            </TouchableOpacity>
-          </TouchableOpacity>
-        }
-      />
+                  <Text style={styles.buttonText}>완료</Text>
+                </TouchableOpacity>
+              </TouchableOpacity>
+            }
+          />
+        )}
+      </View>
     );
     const header = (
       <Header
@@ -421,8 +481,13 @@ const styles = StyleSheet.create({
     color: "#000"
   },
   buttonText: {
+    alignSelf: "center",
+    borderColor: "silver",
+    borderWidth: 1,
     fontSize: 21,
-    color: "black"
+    color: "black",
+    backgroundColor: "white",
+    padding: 5
   },
   buttonTouchable: {
     width: "100%",
@@ -442,6 +507,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#fff",
     fontWeight: "600"
+  },
+  itemX: {
+    fontSize: 8,
+    color: "#000"
   }
 });
 

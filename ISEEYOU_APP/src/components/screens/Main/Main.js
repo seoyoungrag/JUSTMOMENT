@@ -246,10 +246,11 @@ class Main extends Component {
     //   }
     // );
     if (
-      PROPS.USER_INFO.userRoleCd == 100001 ||
-      PROPS.USER_INFO.userRoleCd == 100002 ||
-      PROPS.USER_INFO.userRoleCd == 100003 ||
-      PROPS.USER_INFO.userRoleCd == 100005
+      (PROPS.USER_INFO.userRoleCd == 100001 ||
+        PROPS.USER_INFO.userRoleCd == 100002 ||
+        PROPS.USER_INFO.userRoleCd == 100003 ||
+        PROPS.USER_INFO.userRoleCd == 100005) &&
+      PROPS.USER_INFO.centerId != null
     ) {
       //전체, 원장
       let centerId = PROPS.USER_INFO.centerId;

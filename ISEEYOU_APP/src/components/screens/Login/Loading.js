@@ -320,8 +320,18 @@ class Loading extends React.Component {
         source={Images.loginLoadingBack}
         style={styles.container}
       >
-        <Text style={{ color: "black" }}>사용자 정보를 확인중입니다.</Text>
-        <ActivityIndicator color="black" size="large" />
+        <View
+          style={{
+            padding: 10,
+            margin: 10,
+            backgroundColor: "white",
+            borderColor: "silver",
+            borderWidth: 1
+          }}
+        >
+          <Text style={{ color: "black" }}>사용자 정보를 확인중입니다.</Text>
+          <ActivityIndicator color="black" size="large" />
+        </View>
       </ImageBackground>
     );
   }
