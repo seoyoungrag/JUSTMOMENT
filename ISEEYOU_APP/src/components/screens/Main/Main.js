@@ -246,8 +246,10 @@ class Main extends Component {
     //   }
     // );
     if (
+      PROPS.USER_INFO.userRoleCd == 100001 ||
       PROPS.USER_INFO.userRoleCd == 100002 ||
-      PROPS.USER_INFO.userRoleCd == 100001
+      PROPS.USER_INFO.userRoleCd == 100003 ||
+      PROPS.USER_INFO.userRoleCd == 100005
     ) {
       //전체, 원장
       let centerId = PROPS.USER_INFO.centerId;
@@ -267,27 +269,28 @@ class Main extends Component {
           responseNotFound: function(res) {}
         }
       );
-    } else if (PROPS.USER_INFO.userRoleCd == 100003) {
-      // 선생님
-      let teacherId = PROPS.USER_INFO.userId;
-      cFetch(
-        APIS.GET_CHILD_TEACHER_BY_UID_AND_DATE,
-        [
-          teacherId
-          //로그인한 사용자 user.user_id
-        ],
-        {},
-        {
-          responseProc: function(res) {
-            COM.setState({
-              wholeChildList: res
-            });
-          },
-          responseNotFound: function(res) {}
-        }
-      );
+      // } else if (PROPS.USER_INFO.userRoleCd == 100003) {
+      //   // 선생님
+      //   let teacherId = PROPS.USER_INFO.userId;
+      //   cFetch(
+      //     APIS.GET_CHILD_TEACHER_BY_UID_AND_DATE,
+      //     [
+      //       teacherId
+      //       //로그인한 사용자 user.user_id
+      //     ],
+      //     {},
+      //     {
+      //       responseProc: function(res) {
+      //         COM.setState({
+      //           wholeChildList: res
+      //         });
+      //       },
+      //       responseNotFound: function(res) {}
+      //     }
+      //   );
     } else {
       //100004, 100005 부모, 기타
+      //100005는 제외 1000005는 운전기사등 스태프다.
       let parentId = PROPS.USER_INFO.userPhone;
       cFetch(
         APIS.GET_CHILD_PARENT_BY_UID_AND_DATE,
