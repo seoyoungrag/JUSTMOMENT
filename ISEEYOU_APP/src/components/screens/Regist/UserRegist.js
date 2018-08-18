@@ -135,7 +135,7 @@ class UserRegist extends Component {
     console.log("save btn pressed in userRegist.js start");
     var data = this.props.USER_INFO;
     console.log("before Data in userRgeist.js start--");
-    console.log(data.toString());
+    console.log(JSON.stringify(data));
     console.log("before Data in userRgeist.js end --");
     data.userNm = this.state.userNm;
     data.userPhone = this.state.userPhone;
@@ -163,40 +163,15 @@ class UserRegist extends Component {
       cFetch(APIS.PUT_USER_BY_PHONE, [this.props.USER_INFO.userPhone], body, {
         responseProc: function(res) {
           PROPS.setUserInfo(res);
-          if (res && !isEmpty(res)) {
-            cFetch(
-              APIS.GET_CODE,
-              [],
-              {},
-              {
-                responseProc: function(res) {
-                  PROPS.setCode(res.list ? res.list : res);
-                  cFetch(
-                    APIS.GET_CODE_CATEGORY,
-                    [],
-                    {},
-                    {
-                      responseProc: function(res) {
-                        PROPS.setCodeCategory(res.list ? res.list : res);
-                        console.log(
-                          "go Main via Loading to go Loading in UserRegist.js"
-                        );
-                        console.log(PROPS.navigation.state.params);
-                        if (
-                          PROPS.navigation.state.params &&
-                          PROPS.navigation.state.params.refreshFnc
-                        ) {
-                          console.log("refreshFnc in userRegist.js");
-                          PROPS.navigation.state.params.refreshFnc();
-                        }
-                        PROPS.navigation.navigate("Loading");
-                      }
-                    }
-                  );
-                }
-              }
-            );
+          console.log(PROPS.navigation.state.params);
+          if (
+            PROPS.navigation.state.params &&
+            PROPS.navigation.state.params.refreshFnc
+          ) {
+            console.log("refreshFnc in PushSetup.js");
+            PROPS.navigation.state.params.refreshFnc();
           }
+          PROPS.navigation.navigate("Loading");
         },
         //입력된 회원정보가 없음.
         responseNotFound: function(res) {

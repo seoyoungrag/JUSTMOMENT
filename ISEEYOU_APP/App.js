@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { createStackNavigator } from "react-navigation";
 import UserRegist from "@screens/Regist";
+import PushSetup from "@screens/Regist/PushSetup";
 import Main from "@screens/Main";
 
 import Loading from "@screens/Login/Loading";
@@ -94,7 +95,8 @@ const RootStack = createStackNavigator(
     Login: Login,
     Loading: Loading,
     Main: Main,
-    QRcodeScanner: QRcodeScanner
+    QRcodeScanner: QRcodeScanner,
+    PushSetup: PushSetup
   },
   {
     headerMode: "none",

@@ -35,6 +35,12 @@ const CONTENT = [
     goto: "Regist"
   },
 
+  {
+    icon: "account-box",
+    title: "알림 설정",
+    disabled: true,
+    goto: "PushSetup"
+  },
   // {
   //   icon: "accessibility",
   //   title: "메인",
@@ -328,7 +334,7 @@ export default class Menu extends React.Component {
 
   _clickBtn(target) {
     this.props.closeDrawer();
-    if (target == "Regist") {
+    if (target == "Regist" || target == "PushSetup") {
       this.props.navigation.navigate(target, {
         userStep: "update",
         refreshFnc: this.props.refreshFnc
@@ -347,15 +353,6 @@ export default class Menu extends React.Component {
     const width = this.props.parentWidth;
     return (
       <View style={[styles.container, { width: width }]}>
-        {/* <ToggleSwitch
-          isOn={false}
-          onColor="green"
-          offColor="red"
-          label="Example label"
-          labelStyle={{ color: "black", fontWeight: "900" }}
-          size="large"
-          onToggle={isOn => console.log("changed to : ", isOn)}
-        /> */}
         {/* <View style={styles.selectors}>
           <Text style={styles.selectTitle}>Select:</Text>
           {SELECTORS.map(selector => (
