@@ -52,6 +52,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    setUserInfo: user => {
+      dispatch(ActionCreator.setUserInfo(user));
+    },
     setChildStatus: data => {
       dispatch(ActionCreator.setChildStatus(data));
     }
@@ -74,10 +77,28 @@ class Main extends Component {
 
   _refresh() {
     return new Promise(resolve => {
+      cFetch(
+        APIS.GET_USER_BY_EMAIL,
+        [
+          this.props.USER_INFO.userEmailFacebook
+            ? this.props.USER_INFO.userEmailFacebook
+            : this.props.USER_INFO.userEmailGmail
+        ],
+        {},
+        {
+          responseProc: function(res) {
+            console.log(res);
+            PROPS.setUserInfo(res);
+            resolve();
+          },
+          responseNotFound: function(res) {
+            resolve();
+          }
+        }
+      );
+    }).then(() => {
       this._getChildInfo();
-      setTimeout(() => {
-        resolve();
-      }, 100);
+      // setTimeout(() => {}, 100);
     });
   }
 

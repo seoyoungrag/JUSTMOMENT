@@ -93,7 +93,13 @@ class ChildListItem extends Component {
             {/* ) : null} */}
 
             {/* {obj.eventCheckDt ? ( */}
-            <Text style={{ color: "white" }}>
+            <Text
+              style={{
+                color: "white",
+                fontFamily: "NotoSans-Regular",
+                fontSize: 14
+              }}
+            >
               {obj.childNm}
               {obj.eventCheckDt
                 ? "(" + Unix_timestamp(obj.eventCheckDt) + ")"

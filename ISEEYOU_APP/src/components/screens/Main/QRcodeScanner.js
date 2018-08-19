@@ -172,11 +172,12 @@ class QRcodeScanner extends Component {
           checkerUserId: this.props.USER_INFO.userId
         };
         let formDate = getTime();
-        if (targetEventCd == 300001) {
-          data.eventStartDt = formDate;
-        } else {
-          data.eventEndDt = formDate;
-        }
+        data.eventStartDt = formDate;
+        // if (targetEventCd == 300001) {
+        //   data.eventStartDt = formDate;
+        // } else {
+        //   data.eventEndDt = formDate;
+        // }
         let body = JSON.stringify(data);
         const COM = this;
         cFetch(APIS.POST_CHILD_EVENT, [], body, {
