@@ -11,7 +11,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   BackHandler,
-  Linking
+  Linking,
+  AppState
 } from "react-native";
 import { createStackNavigator } from "react-navigation";
 import UserRegist from "@screens/Regist";
@@ -128,11 +129,20 @@ export default class App extends React.Component {
 
     AdMobInterstitial.requestAd().catch(error => console.warn(error));
   }
-  componentDidMount() {}
+  componentDidMount() {
+    AppState.addEventListener("change", this.handleAppStateChange);
+  }
 
   componentWillUnmount() {
     AdMobInterstitial.removeAllListeners();
+    AppState.removeEventListener("change", this.handleAppStateChange);
   }
+  handleAppStateChange = nextAppState => {
+    console.log(nextAppState);
+    if (nextAppState === "inactive") {
+      console.log("the app is closed");
+    }
+  };
   showInterstitial() {
     setTimeout(() => {
       AdMobInterstitial.removeAllListeners();

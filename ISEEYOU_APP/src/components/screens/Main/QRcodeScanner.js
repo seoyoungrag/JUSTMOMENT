@@ -173,6 +173,7 @@ class QRcodeScanner extends Component {
         };
         let formDate = getTime();
         data.eventStartDt = formDate;
+        data.eventCheckType = this.props.navigation.state.params.targetEventCd;
         // if (targetEventCd == 300001) {
         //   data.eventStartDt = formDate;
         // } else {
