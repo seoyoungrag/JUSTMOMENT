@@ -153,61 +153,49 @@ class QRcodeScanner extends Component {
     });
   }
   _saveAllChild() {
-    //return new Promise(resolve => {
-    // this.setState({
-    //   loadingShow: true
-    // });
-    let eventNm = this.props.CODE.find(elem => {
-      return elem.code == this.props.navigation.state.params.targetEventCd;
-    }).codeNm;
-    let destinyNm = this.props.navigation.state.params.destinyNm;
-    let classDailyEventId = this.props.navigation.state.params
-      .classDailyEventId;
-    let targetEventCd = this.props.navigation.state.params.targetEventCd;
-    var date = new Date();
-    //인서트시간이나 서버시간찍어도 됨..
-    const items = [...this.state.items];
-    let processingId = 0;
-    for (let i = 0; i < items.length; i++) {
-      let data = {
-        classDailyEventId: classDailyEventId,
-        childId: items[i].id,
-        checkerUserId: this.props.USER_INFO.userId
-      };
-      let formDate = getTime();
-      if (targetEventCd == 300001) {
-        data.eventStartDt = formDate;
-      } else {
-        data.eventEndDt = formDate;
-      }
-      let body = JSON.stringify(data);
-      const COM = this;
-      cFetch(APIS.POST_CHILD_EVENT, [], body, {
-        responseProc: function(res) {
-          processingId++;
-        },
-        responseNotFound: function(res) {
-          processingId++;
-          console.log("qrcode not f ", res);
-          alert("입력이실패했습니다.\n관리자에게 확인해주세요");
-        },
-        responseError: function(res) {
-          processingId++;
-          console.log("qrcode err ", res);
+    return new Promise(resolve => {
+      let eventNm = this.props.CODE.find(elem => {
+        return elem.code == this.props.navigation.state.params.targetEventCd;
+      }).codeNm;
+      let destinyNm = this.props.navigation.state.params.destinyNm;
+      let classDailyEventId = this.props.navigation.state.params
+        .classDailyEventId;
+      let targetEventCd = this.props.navigation.state.params.targetEventCd;
+      var date = new Date();
+      //인서트시간이나 서버시간찍어도 됨..
+      const items = [...this.state.items];
+      let processingId = 0;
+      for (let i = 0; i < items.length; i++) {
+        let data = {
+          classDailyEventId: classDailyEventId,
+          childId: items[i].id,
+          checkerUserId: this.props.USER_INFO.userId
+        };
+        let formDate = getTime();
+        if (targetEventCd == 300001) {
+          data.eventStartDt = formDate;
+        } else {
+          data.eventEndDt = formDate;
         }
-      });
-    }
-    // setTimeout(() => {
-    //   processingId = items.length;
-    // }, 5000);
-    // while (processingId != items.length) {}
-    // this.setState({
-    //   loadingShow: false
-    // });
-    this.props.navigation.state.params.refreshFnc();
-    this.props.navigation.navigate("Main");
-    //resolve();
-    //});
+        let body = JSON.stringify(data);
+        const COM = this;
+        cFetch(APIS.POST_CHILD_EVENT, [], body, {
+          responseProc: function(res) {
+            processingId++;
+          },
+          responseNotFound: function(res) {
+            processingId++;
+            console.log("qrcode not f ", res);
+            alert("입력이실패했습니다.\n관리자에게 확인해주세요");
+          },
+          responseError: function(res) {
+            processingId++;
+            console.log("qrcode err ", res);
+          }
+        });
+      }
+      resolve();
+    });
   }
   componentDidMount() {
     // this.notiWithRemove("어린이1", "어린이2")
@@ -232,7 +220,13 @@ class QRcodeScanner extends Component {
   }
   //동작안하네..
   _closeScreen = () => {
+    this.setState({
+      loadingShow: true
+    });
     this._saveAllChild().then(() => {
+      this.setState({
+        loadingShow: false
+      });
       this.props.navigation.state.params.refreshFnc();
       this.props.navigation.navigate("Main");
     });
@@ -436,7 +430,7 @@ class QRcodeScanner extends Component {
                     })
                   }
                   onPress={() => {
-                    this._saveAllChild();
+                    this._closeScreen();
                   }}
                 >
                   <Text style={styles.buttonText}>완료</Text>

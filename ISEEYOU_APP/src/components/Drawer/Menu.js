@@ -36,7 +36,7 @@ const CONTENT = [
   },
 
   {
-    icon: "account-box",
+    icon: "access-alarm",
     title: "알림 설정",
     disabled: true,
     goto: "PushSetup"

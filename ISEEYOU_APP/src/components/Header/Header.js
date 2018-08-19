@@ -24,14 +24,14 @@ let styles = {
     resizeMode: "contain"
   },
   headerFirstIconContainer: {
-    paddingLeft: 10,
-    alignItems: "flex-end"
+    paddingLeft: 10
+    // alignItems: "flex-end"
   },
   headerSecondTextContainer: {
-    paddingLeft: 10
+    // paddingLeft: 10
   },
   headerThirdDelimeterContainer: {
-    paddingLeft: 10,
+    // paddingLeft: 10,
     alignItems: "flex-start"
   },
   headerFirstIcon: {
@@ -131,18 +131,21 @@ class Header extends React.Component {
             borderBottomWidth={1}
             flex={1}
           >
-            <View style={styles.headerFirstIconContainer}>
+            <View
+              flex={1}
+              justifyContent="flex-start"
+              alignItems="flex-start"
+              style={styles.headerFirstIconContainer}
+            >
               <Image style={styles.headerFirstIcon} source={Images.HeaderBmi} />
             </View>
-            <View style={styles.headerSecondTextContainer}>
+            <View flex={8} style={styles.headerSecondTextContainer}>
               <Text style={styles.headerSecondText}>
                 {/* 우리아이가 방금 등원했어요. */}
                 {this.props.CHILD_STATUS}
               </Text>
             </View>
-
-            <View flex={2} />
-            <View flex={10}>
+            <View flex={1}>
               <View style={styles.headerMenuIconContainer}>
                 <TouchableOpacity
                   style={styles.btn2}

@@ -10,7 +10,8 @@ import {
   NativeModules,
   TouchableOpacity,
   StyleSheet,
-  BackHandler
+  BackHandler,
+  Linking
 } from "react-native";
 import { createStackNavigator } from "react-navigation";
 import UserRegist from "@screens/Regist";
@@ -147,25 +148,53 @@ export default class App extends React.Component {
       <Provider store={createStore(reducers)}>
         <ThemeContext.Provider value={getTheme(uiTheme)}>
           <RootStack />
-
-          <Banner>
-            <TouchableOpacity
-              onPress={this.showInterstitial}
-              style={styles.headerFirstIconContainer}
-            >
-              <MaterialIcons
-                name="exit-to-app"
-                color="#000000"
-                size={35}
-                borderWidth={0}
-                style={{ marginRight: 10 }}
-              />
-              <View style={styles.headerSecondTextContainer}>
-                <Text style={styles.headerSecondText}>광고보고 종료하기</Text>
-              </View>
-            </TouchableOpacity>
-            {/* <Button title="광고보고 종료하기" onPress={this.showInterstitial} /> */}
-          </Banner>
+          <View style={[styles.headerFirstIconContainer, { width: "100%" }]}>
+            <View style={{ flex: 1, margin: 0, padding: 0 }}>
+              <Banner style={{ flex: 1, margin: 0, padding: 0 }}>
+                <TouchableOpacity
+                  onPress={this.showInterstitial}
+                  style={[styles.headerFirstIconContainer, { width: "100%" }]}
+                >
+                  <MaterialIcons
+                    name="exit-to-app"
+                    color="#000000"
+                    size={30}
+                    borderWidth={0}
+                    style={{ paddingRight: 5 }}
+                  />
+                  <View style={styles.headerSecondTextContainer}>
+                    <Text style={styles.headerSecondText}>광고보고 종료</Text>
+                  </View>
+                </TouchableOpacity>
+                {/* <Button title="광고보고 종료하기" onPress={this.showInterstitial} /> */}
+              </Banner>
+            </View>
+            <View style={{ flex: 1, margin: 0, padding: 0 }}>
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL("https://cafe.naver.com/childrenneeds").catch(
+                    err => {
+                      console.error(
+                        "에러가 발생했습니다.\n잘못된 QR코드입니다.\n관리자에게 문의해주세요."
+                      );
+                    }
+                  );
+                }}
+                style={[styles.headerFirstIconContainer, { width: "100%" }]}
+              >
+                <MaterialIcons
+                  name="child-care"
+                  color="#000000"
+                  size={30}
+                  borderWidth={0}
+                  style={{ paddingRight: 5 }}
+                />
+                <View style={styles.headerSecondTextContainer}>
+                  <Text style={styles.headerSecondText}>공식카페 가기</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
         </ThemeContext.Provider>
       </Provider>
     );
@@ -182,16 +211,15 @@ let styles = {
     resizeMode: "contain"
   },
   headerFirstIconContainer: {
-    paddingLeft: 10,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    height: 70,
+    height: 50,
     borderColor: "black",
     borderWidth: 1
   },
   headerSecondTextContainer: {
-    paddingLeft: 10
+    // paddingLeft: 10
   },
   headerThirdDelimeterContainer: {
     paddingLeft: 10,
@@ -202,7 +230,7 @@ let styles = {
     resizeMode: "contain"
   },
   headerSecondText: {
-    fontSize: 22,
+    fontSize: 18,
     color: "black",
     fontFamily: "NotoSans-Regular"
   },
