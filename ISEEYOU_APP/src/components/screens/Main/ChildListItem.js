@@ -156,7 +156,7 @@ class ChildListItem extends Component {
                 {
                   fontSize: 14,
                   color: "#555555",
-                  // paddingRight: width / 10,
+                  paddingRight: width / 15,
                   textAlign: "right"
                 }
               ]}

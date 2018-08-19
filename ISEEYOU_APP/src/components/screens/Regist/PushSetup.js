@@ -75,11 +75,15 @@ class UserRegist extends Component {
       //사용자정보
       alarmNormalYn:
         this.props.USER_INFO.alarmNormalYn != undefined
-          ? this.props.USER_INFO.alarmNormalYn
+          ? this.props.USER_INFO.alarmNormalYn == "Y"
+            ? true
+            : false
           : true,
       alarmEmergencyYn:
         this.props.USER_INFO.alarmEmergencyYn != undefined
-          ? this.props.USER_INFO.alarmEmergencyYn
+          ? this.props.USER_INFO.alarmEmergencyYn == "Y"
+            ? true
+            : false
           : false
     };
   }
